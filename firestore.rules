@@ -1,0 +1,40 @@
+// UniCue V1 Firestore rules.
+// Admin UID = Firebase Auth UID of admin@unicue.com.
+// Students: read published content only. Admin: full read/write.
+// Deploy with: firebase deploy --only firestore:rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == "xrZS4IcV9FNglMXn5ret53skmwD2";
+    }
+
+    // Information: students read published items. Items past expiresAt stay
+    // readable by direct link (the app shows "This information has expired").
+    // Items an admin manually marked "expired" are readable by direct link too.
+    match /information/{id} {
+      allow read: if isAdmin() || resource.data.status in ["published", "expired"];
+      allow create, update: if isAdmin()
+        && request.resource.data.status in ["draft", "published", "expired"];
+      allow delete: if isAdmin();
+    }
+
+    // Placements: students read published and closed opportunities
+    // (closed ones stay visible so students see them marked Closed).
+    match /placements/{id} {
+      allow read: if isAdmin() || resource.data.status in ["published", "closed"];
+      allow create, update: if isAdmin()
+        && request.resource.data.status in ["draft", "published", "closed"];
+      allow delete: if isAdmin();
+    }
+
+    // Content version: ONE tiny doc students read to learn whether messages or
+    // placements changed (saves Spark read quota). Only the admin can bump it.
+    match /meta/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Everything else is denied by default.
+  }
+}

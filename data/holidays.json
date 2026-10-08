@@ -1,0 +1,38 @@
+{
+  "updated": "2026-10-05",
+  "source": "LPU UMS / LPU Touch list of holidays",
+  "holidays": [
+    {
+      "date": "2026-10-20",
+      "name": "Dussehra"
+    },
+    {
+      "date": "2026-10-26",
+      "name": "Birthday of Maharishi Balmiki Ji"
+    },
+    {
+      "date": "2026-11-07",
+      "name": "Diwali"
+    },
+    {
+      "date": "2026-11-08",
+      "name": "Diwali"
+    },
+    {
+      "date": "2026-11-09",
+      "name": "Diwali"
+    },
+    {
+      "date": "2026-11-10",
+      "name": "Holiday"
+    },
+    {
+      "date": "2026-11-24",
+      "name": "Birthday of Sri Guru Nanak Dev Ji"
+    },
+    {
+      "date": "2026-12-25",
+      "name": "Christmas"
+    }
+  ]
+}
